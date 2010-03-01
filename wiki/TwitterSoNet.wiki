@@ -54,7 +54,7 @@ There is a lot of possible future work for this project. Since twitter offers a 
 = Links =
 ----
 <ul>
-<li><a href="http://code.google.com/p/pp-usc-ss12-accessible-social-networking-b/"> Project Home</a><li>
+<li><a href="http://code.google.com/p/pp-usc-ss12-accessible-social-networking-b/"> Project Home</a></li>
 </ul>
 
 
@@ -74,4 +74,3 @@ There is a lot of possible future work for this project. Since twitter offers a 
  # <a href="http://www.wdvl.com/Authoring/JavaScript/Tutorial/" target="_blank">http://www.wdvl.com/Authoring/JavaScript/Tutorial/</a>
 </ul>
 ----
-
