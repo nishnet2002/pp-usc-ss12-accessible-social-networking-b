@@ -28,10 +28,15 @@ While making a project such as this, you want to make sure that the end-user has
 <br/><br/>
 || *Keyword (from keyboard)* || *Action Initiated* ||
 || up/down || Navigate through the tweets || 
-|| z || Get the list of people following you || 
-|| b || Next item in a list || 
-|| h || go to home page || 
+|| 1 || Focus on the tweet box || 
+|| 2 || Post a tweet from your profile || 
+|| 3 || Get my followers || 
 || e || Go to list of Trending Topics || 
+|| 4 || List of Following  || 
+|| 5 || Go to home page ||  
+|| 0 || Sign Out || 
+|| Alt + Shift + + || Find People || 
+|| Alt + Shift + s || Settings Page || 
 
 = Challenges =
 ----
