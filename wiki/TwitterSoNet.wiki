@@ -73,4 +73,5 @@ There is a lot of possible future work for this project. Since twitter offers a 
  # <a href="http://www.webteacher.com/javascript/ch03.html" target="_blank">http://www.webteacher.com/javascript/ch03.html</a>
  # <a href="http://www.wdvl.com/Authoring/JavaScript/Tutorial/" target="_blank">http://www.wdvl.com/Authoring/JavaScript/Tutorial/</a>
 </ul>
+<br/> *NOTE:* This Wiki page is subject to change as and when new features are implemented.
 ----
