@@ -70,13 +70,16 @@ axsTweet.loggedin = null;
 /**
  * Initializes the AxsJAX script
  */
+ 
 axsTweet.init = function(){
+
+
   axsTweet.axsJAXObj = new AxsJAX(true);
   axsTweet.axsNavObj = new AxsNav(axsTweet.axsJAXObj);
 
 
  var patt1 = new RegExp("/logout");
-  if(document.baseURI !== "http://twitter.com/login") {
+  if(document.baseURI == "http://twitter.com/") {
       if(patt1.test(document.getElementsByTagName("body")[0].innerHTML)) {
           //alert("User is logged in.");
           axsTweet.loggedin = true;
@@ -89,6 +92,7 @@ axsTweet.init = function(){
           axsTweet.LoginPage.pageLoad();
       }
   }
+
 
   //Add event listeners
   document.addEventListener('DOMNodeInserted',
@@ -131,8 +135,8 @@ axsTweet.init = function(){
                     'dy/tr/td[@id="content"]/div/div[@id="follow"]/div[@id="fol' +
                     'low_grid"]/div[@id="pagination"]/a[2]</target>'+
 					'</list>' +
-	  '<list title="Cycle Results" next="UP j" prev="DOWN k" f' +
-                    'wd="n" back="p" >' +
+	  '<list title="Cycle Results" next="UP j" prev="DOWN k">'+
+//                     'fwd="n" back="p" >' +
                     '<item>' +
                     '/html/body[@id="followers"]/div[@id="container"]/table/tbo' +
                     'dy/tr/td[@id="content"]/div/div[@id="follow"]/div[@id="fol' +
@@ -216,22 +220,50 @@ axsTweet.LoginPage.keyHandler = function(evt) {
  */
 axsTweet.keyHandler = function(evt){
   //If Ctrl is held, it must be for some AT. 
-  if (evt.charCode == 122) {
+ if(window.location != "http://twitter.com/login")
+	{
+
+ if (evt.charCode == 52 /*&& evt.shiftKey && evt.ctrlKey*/) {//122
   window.location = "http://twitter.com/following";
   }
 
- if (evt.charCode == 122) {
-  window.location = "http://twitter.com/following";
-  }
+  if(evt.charCode == 51 /*&& evt.shiftKey && evt.ctrlKey*/)//115
+	  window.location = "http://twitter.com/followers";
+
+  if(evt.charCode == 49 /*&& evt.shiftKey && evt.ctrlKey*/) //61
+		{	  try{
+				document.getElementById("status").focus();
+				axsTweet.axsJAXObj.speakTextViaNode("You can enter Tweet");
+				}
+		  catch(e){}
+		}
+
+ if(evt.charCode == 50 /*&& evt.shiftKey && evt.ctrlKey*/)//45
+		{	  try{
+				document.getElementById("update-submit").click();
+				axsTweet.axsJAXObj.speakTextViaNode("You Posted a Tweet");
+				}
+		  catch(e){}
+		}
+ if(evt.charCode == 48 /*&& evt.shiftKey && evt.ctrlKey*/)//45
+		{	  try{
+				document.getElementById('sign_out_form').submit();
+				axsTweet.axsJAXObj.speakTextViaNode("You are signed out!");
+				}
+		  catch(e){}
+		}
+
+if (evt.keyCode == 27)
+
+{
+	axsTweet.axsJAXObj.lastFocusedNode.blur();
+	return false;
+}
 //alert(evt.charCode+" "+evt.keyCode );
-	if ( evt.keyCode == 104) {
+	if ( evt.charCode == 53 /*&& evt.shiftKey && evt.ctrlKey*/) {//104
   window.location = "http://twitter.com/";
   }
-
-  if (evt.keyCode == 27){ // ESC
-    axsTweet.axsJAXObj.lastFocusedNode.blur();
-    return false;
-  }
+	}
 
   if (axsTweet.axsJAXObj.inputFocused) return true;
 
