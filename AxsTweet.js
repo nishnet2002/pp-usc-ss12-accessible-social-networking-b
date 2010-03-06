@@ -129,7 +129,7 @@ axsTweet.init = function(){
                   //'</target>'+
                   '  </list>' +
 			     '  <list title="Trending" next="DOWN j" prev="UP k" hotkey="e">' +
-                  '    <item>' +
+                  '    <item action="CALL:speakTrends">' +
                   '/html/body[@id="home"]/div[@id="container"]/table/tbody/t' +
                   'r/td[@id="side_base"]/div[@id="side"]/div[@id="trends"]/ul' +
                   '/li/a' +
@@ -389,6 +389,16 @@ function speakTweet(currentElement)
 	 axsTweet.axsLensObj.view(currentElement.elem);
    currentElement.elem.scrollIntoView(true);
    axsTweet.axsJAXObj.speakTextViaNode(compStr);
+}
+
+function speakTrends(currentElement)
+{
+       var trendStr = "";
+       trendStr = currentElement.elem.innerHTML;
+       trendStr = trendStr.replace(/#/gi,"Tag of ");
+   axsTweet.axsLensObj.view(currentElement.elem);
+   currentElement.elem.scrollIntoView(true);
+   axsTweet.axsJAXObj.speakTextViaNode(trendStr);
 }
 
 
