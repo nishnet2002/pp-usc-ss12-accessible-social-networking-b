@@ -256,6 +256,13 @@ axsTweet.keyHandler = function(evt){
             if ( evt.charCode == 53) {      //5
                 window.location = "http://twitter.com/";
             }
+			
+			 //for retweet yes or no
+			if(evt.charCode == 121 && document.getElementsByTagName("body")[0].lastChild.className == "inline-form retweet-dlg")
+			{
+			document.getElementsByClassName("btn")[4].click();
+			axsTweet.axsJAXObj.speakTextViaNode("Retweet Successful !");
+			}
 
             if(evt.keyCode == 9) {
                 if(!axsTweet.loggedin) {
