@@ -1,27 +1,10 @@
-// Copyright 2008 Google Inc.
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//      http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ex or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
-/**
- * @fileoverview AxsJAX to enhance accessibility
- * of Skel. 
- *
- * This is a skeleton AxsJAX script - when you start using it,
- * you should do a global replace of "axsTweet" with 
- * "axsWhateverYourAppNameIs" and update this fileoverview.
- *
- * @author clchen@google.com (Charles L. Chen)
- */
+//Java script for improviing accessibility of twitter.com
+//Author Nishit Chokhawala (nishnet2002@gmail.com)
+//Author Nikhil Mohan (nikhilmohan21@gmail.com)
+//Author Ranjanabh Bahukhandi (ranjanabhb@gmail.com)
+//Author Vinay Tambve (vtambve@gmail.com)
+
 // create namespace
 var axsTweet = {};
 
@@ -30,7 +13,6 @@ var axsTweet = {};
  * @type string
  */
 axsTweet.HELP = 'The following shortcut keys are available. ';
-
 
 /**
  * The AxsJAX object that will do the tickling and speaking.
@@ -375,11 +357,13 @@ function speakTweet(currentElement)
 
     // Replace URLs
     var hrefArray = currentElement.elem.getElementsByTagName('a');
+    var j=0;
     for(var i=0; i<hrefArray.length;i++)
     {
         if(hrefArray[i].className == "tweet-url web")    
         {
-            var replStr = "; Details at this link;";
+            j++;
+            var replStr = "; Link"+j+";";
             hrefArray[i].innerHTML = replStr;
         }
     }
@@ -389,7 +373,7 @@ function speakTweet(currentElement)
     usernameA = getElementsByClassName(currentElement.elem,"span","entry-content");
     tempStr = removeHTMLTags(usernameA[0].innerHTML);
     compStr += tempStr;
-    compStr = compStr.replace(/#/gi,"");
+    compStr = compStr.replace(/[!#^(){}\[\]\\<>\|]/gi,"");
 	
 	 axsTweet.axsLensObj.view(currentElement.elem);
    currentElement.elem.scrollIntoView(true);
