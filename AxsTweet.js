@@ -105,70 +105,75 @@ axsTweet.init = function(){
                             true);
   document.addEventListener('keypress', axsTweet.keyHandler, true);
 
-  var cnrString = '<cnr>' +
-                  '  <list title="Cycle Results" next="DOWN j" prev="UP k">' +
-                  '    <item action="CALL:speakTweet">' +
-                  '     /html/body[@id="home"]/div[@id="container"]/table/tb' +
-                  'ody/tr/td[@id="content"]/div/div[3]/ol[@id="timeline"]/li' +
-                  '    </item>' +
-				  //delete
-				  '<target title="Delete Tweet" hotkey="d" >' +
-                  '   ./span[2]/ul/li/span[@class="del"]' +
-                  '</target>'+
-				  //reply
-				  '<target title="Reply Tweet" hotkey="r">' +
-                  '   ./span[2]/ul/li/span[@class="reply"]' +
-                  '</target>'+
-				  //retweet
-				  '<target title="Retweet" hotkey="t">' +
-                  './span[2]/ul/li/span[@class="retweet-link"]' +
-                  '</target>'+
-				  //Favourites
-				  //'<target title="Retweet" hotkey="f">' +
-                  //'./span[2]/ul/li/span[@class="retweet-link"]' +
-                  //'</target>'+
-                  '  </list>' +
-			     '  <list title="Trending" next="DOWN j" prev="UP k" hotkey="e">' +
-                  '    <item action="CALL:speakTrends">' +
-                  '/html/body[@id="home"]/div[@id="container"]/table/tbody/t' +
-                  'r/td[@id="side_base"]/div[@id="side"]/div[@id="trends"]/ul' +
-                  '/li/a' +
-                  '    </item>' +
-			      '  </list>' +
-	   '<list title="Cycle Results" next="UP j" prev="DOWN k" f' +
-                    'wd="x" back="c" >' +
-                    '<item>' +
-                    '/html/body[@id="following"]/div[@id="container"]/table/tbo' +
-                    'dy/tr/td[@id="content"]/div/div[@id="follow"]/div[@id="fol' +
-                    'low_grid"]/table/tbody/tr[*]/td[2]/address/span[2]/span[1]'+
-                    '</item>'+
-					'<target title="Next Followers Link" hotkey="b">'+
-                    '/html/body[@id="following"]/div[@id="container"]/table/tbo' +
-                    'dy/tr/td[@id="content"]/div/div[@id="follow"]/div[@id="fol' +
-                    'low_grid"]/div[@id="pagination"]/a'+
-                    '</target> ' +
-                    '<target title="Prev Followers Link" hotkey="c">'+
-                    '/html/body[@id="following"]/div[@id="container"]/table/tbo' +
-                    'dy/tr/td[@id="content"]/div/div[@id="follow"]/div[@id="fol' +
-                    'low_grid"]/div[@id="pagination"]/a[2]</target>'+
-					'</list>' +
-	  '<list title="Cycle Results" next="UP j" prev="DOWN k">'+
-                    '<item>' +
-                    '/html/body[@id="followers"]/div[@id="container"]/table/tbo' +
-                    'dy/tr/td[@id="content"]/div/div[@id="follow"]/div[@id="fol' +
-                    'low_grid"]/table/tbody/tr[*]/td[2]/address/span[2]/span[1]' +
-					'</item></list>' +
-	  '<target title="Next Followers Link" hotkey="b">'+
-                    '/html/body[@id="followers"]/div[@id="container"]/table/tbo' +
-                    'dy/tr/td[@id="content"]/div/div[@id="follow"]/div[@id="fol' +
-                    'low_grid"]/div[@id="pagination"]/a' +
-                    '</target> ' +
-                    '<target title="Prev Followers Link" hotkey="c">'+
-                    '/html/body[@id="followers"]/div[@id="container"]/table/tbo' +
-                    'dy/tr/td[@id="content"]/div/div[@id="follow"]/div[@id="fol' +
-                    'low_grid"]/div[@id="pagination"]/a[2]' +
-                    '</target> '+
+  var cnrString = '<cnr> ' +
+                  '    <list title="Cycle Results" next="DOWN j" prev="UP k"' +
+                  ' hotkey="w">' +
+                  '        <item action="CALL:speakTweet">' +
+                  '            /html/body[@id="home"]/div[@id="container"]/t' +
+                  'able/tbody/tr/td[@id="content"]/div/div[3]/ol[@id="timelin' +
+                  'e"]/li' +
+                  '        </item>' +
+                  '        <target title="Delete Tweet" hotkey="d" >' +
+                  '            ./span[2]/ul/li/span[@class="del"]' +
+                  '        </target>' +
+                  '        <target title="Reply Tweet" hotkey="r">' +
+                  '            ./span[2]/ul/li/span[@class="reply"]' +
+                  '        </target>' +
+                  '        <target title="Retweet" hotkey="t">' +
+                  '            ./span[2]/ul/li/span[@class="retweet-link"]' +
+                  '        </target>' +
+                  '        <!--target title="Retweet" hotkey="f">' +
+                  '            //./span[2]/ul/li/span[@class="retweet-link"]' +
+                  '        //</target-->' +
+                  '    </list>' +
+                  '    <list title="Trending" next="DOWN j" prev="UP k" hotk' +
+                  'ey="e">' +
+                  '        <item action="CALL:speakTrends">' +
+                  '            /html/body[@id="home"]/div[@id="container"]/t' +
+                  'able/tbody/tr/td[@id="side_base"]/div[@id="side"]/div[@id=' +
+                  '"trends"]/ul/li/a' +
+                  '        </item>' +
+                  '    </list>' +
+                  '    <list title="Cycle Results" next="UP j" prev="DOWN k"' +
+                  ' fwd="x" back="c" >' +
+                  '        <item>' +
+                  '            /html/body[@id="following"]/div[@id="containe' +
+                  'r"]/table/tbody/tr/td[@id="content"]/div/div[@id="follow"]' +
+                  '/div[@id="follow_grid"]/table/tbody/tr[*]/td[2]/address/sp' +
+                  'an[2]/span[1]' +
+                  '        </item>' +
+                  '        <target title="Next Following Link" hotkey="b">' +
+                  '            /html/body[@id="following"]/div[@id="containe' +
+                  'r"]/table/tbody/tr/td[@id="content"]/div/div[@id="follow"]' +
+                  '/div[@id="follow_grid"]/div[@id="pagination"]/a' +
+                  '        </target>' +
+                  '        <target title="Prev Following Link" hotkey="c">' +
+                  '            /html/body[@id="following"]/div[@id="containe' +
+                  'r"]/table/tbody/tr/td[@id="content"]/div/div[@id="follow"]' +
+                  '/div[@id="follow_grid"]/div[@id="pagination"]/a[2]' +
+                  '        </target>' +
+                  '    </list>' +
+                  '    <list title="Cycle Results" next="UP j" prev="DOWN k"' +
+                  '>' +
+                  '        <item>' +
+                  '            /html/body[@id="followers"]/div[@id="containe' +
+                  'r"]/table/tbody/tr/td[@id="content"]/div/div[@id="follow"]' +
+                  '/div[@id="follow_grid"]/table/tbody/tr[*]/td[2]/address/sp' +
+                  'an[2]/span[1]' +
+                  '        </item>' +
+                  '    </list>' +
+                  '    <target title="Next Followers Link" hotkey="b">' +
+                  '        /html/body[@id="followers"]/div[@id="container"]/' +
+                  'table/tbody/tr/td[@id="content"]/div/div[@id="follow"]/div' +
+                  '[@id="follow_grid"]/div[@id="pagination"]/a' +
+                  '    </target>' +
+                  '    <target title="Prev Followers Link" hotkey="c">' +
+                  '        /html/body[@id="followers"]/div[@id="container"]/' +
+                  'table/tbody/tr/td[@id="content"]/div/div[@id="follow"]/div' +
+                  '[@id="follow_grid"]/div[@id="pagination"]/a[2]' +
+                  '    </target>' +
                   '</cnr>';
+              
   axsTweet.axsNavObj.navInit(cnrString, null);
 
   axsTweet.axsLensObj = new AxsLens(axsTweet.axsJAXObj);
