@@ -55,10 +55,11 @@ Right now there are two ways in which you can run our application:<br/>
 <ul>
 <li>1. Downloading the zip package of the firefox twitter application that is located <a>here</a> </li>
 <li>2. Making sure that you have the following tools added to a 
-<a href="http://portableapps.com/apps/internet/firefox_portable" target="_blank">sand-boxed version</a> of firefox:</li></ul>
+<a href="http://portableapps.com/apps/internet/firefox_portable" target="_blank">sand-boxed version</a> of firefox:</li>
+*->a.* Greasemonkey for adding scripts to firefox<br/>
+*->b.* Fire Vox TTS Enginer<br/><br/>
+</ul>
 <br/>
-*a.* Greasemonkey for adding scripts to firefox<br/>
-*b.* Fire Vox TTS Enginer<br/><br/>
 
 Please visit <a href="http://google-axsjax.googlecode.com/svn/trunk/docs/tutorial/tutorial.html#sec-1" target="_blank">http://google-axsjax.googlecode.com/svn/trunk/docs/tutorial/tutorial.html#sec-1</a> for more details 
 
