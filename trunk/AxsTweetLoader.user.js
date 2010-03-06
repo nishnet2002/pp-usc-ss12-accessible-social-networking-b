@@ -33,7 +33,7 @@ function loadScript(){
     var theScript = document.createElement('script');
     theScript.type = 'text/javascript';
   
-    var baseURL = "http://code.google.com/p/pp-usc-ss12-accessible-social-networking-b/source/browse/trunk/";
+    var baseURL = "http://pp-usc-ss12-accessible-social-networking-b.googlecode.com/svn/trunk/";
 
     theScript.src = baseURL + 'AxsTweet.js';
     
