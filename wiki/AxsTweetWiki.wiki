@@ -1,4 +1,4 @@
-#summary This page describes information about the Social Networking Twitter Website
+#summary This page describes information about the web application made for accessing the Social Networking Website Twitter with a target audience being predominantly the blind individual in this case.
 
 =Introduction=
 ----
@@ -6,7 +6,9 @@
 
 http://www.ccc.uci.edu/images/frontpage/twitter.jpg
 
+<table><tr><td>
 <wiki:toc max_depth="1" />
+</td></tr></table>
 
 =Team Members=
 ----
