@@ -8,7 +8,7 @@
 // 
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either ex or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
@@ -79,7 +79,9 @@ axsTweet.init = function(){
 
 
  var patt1 = new RegExp("/logout");
-  if(document.baseURI == "http://twitter.com/") {
+ var patt2 = new RegExp("twitter.com");
+ var patt3 = new RegExp("login");
+  if(patt2.test(document.baseURI) && !patt3.test(document.baseURI)) {
       if(patt1.test(document.getElementsByTagName("body")[0].innerHTML)) {
           //alert("User is logged in.");
           axsTweet.loggedin = true;
@@ -104,12 +106,27 @@ axsTweet.init = function(){
   document.addEventListener('keypress', axsTweet.keyHandler, true);
 
   var cnrString = '<cnr>' +
-                  '  <list title="Cycle Results" next="DOWN j" prev="UP k" f' +
-                  'wd="n" back="p">' +
-                  '    <item>' +
+                  '  <list title="Cycle Results" next="DOWN j" prev="UP k">' +
+                  '    <item action="CALL:speakTweet">' +
                   '     /html/body[@id="home"]/div[@id="container"]/table/tb' +
                   'ody/tr/td[@id="content"]/div/div[3]/ol[@id="timeline"]/li' +
                   '    </item>' +
+				  //delete
+				  '<target title="Delete Tweet" hotkey="d" >' +
+                  '   ./span[2]/ul/li/span[@class="del"]' +
+                  '</target>'+
+				  //reply
+				  '<target title="Reply Tweet" hotkey="r">' +
+                  '   ./span[2]/ul/li/span[@class="reply"]' +
+                  '</target>'+
+				  //retweet
+				  '<target title="Retweet" hotkey="t">' +
+                  './span[2]/ul/li/span[@class="retweet-link"]' +
+                  '</target>'+
+				  //Favourites
+				  //'<target title="Retweet" hotkey="f">' +
+                  //'./span[2]/ul/li/span[@class="retweet-link"]' +
+                  //'</target>'+
                   '  </list>' +
 			     '  <list title="Trending" next="DOWN j" prev="UP k" hotkey="e">' +
                   '    <item>' +
@@ -136,7 +153,6 @@ axsTweet.init = function(){
                     'low_grid"]/div[@id="pagination"]/a[2]</target>'+
 					'</list>' +
 	  '<list title="Cycle Results" next="UP j" prev="DOWN k">'+
-//                     'fwd="n" back="p" >' +
                     '<item>' +
                     '/html/body[@id="followers"]/div[@id="container"]/table/tbo' +
                     'dy/tr/td[@id="content"]/div/div[@id="follow"]/div[@id="fol' +
@@ -177,6 +193,11 @@ axsTweet.nodeInsertedHandler = function(evt){
   var target = evt.target;
   // If the target node is something that should
   // be spoken, speak it here.
+  
+  if (target.className == "inline-form retweet-dlg" && evt.type == "DOMNodeInserted")
+  {
+	axsTweet.axsJAXObj.speakTextViaNode("Do you want to Retweet? Press y for yes and n for no");
+  }
 };
 
 /**
@@ -190,28 +211,15 @@ axsTweet.attrModifiedHandler = function(evt){
   var target = evt.target;
   // If the target node is something that should
   // be spoken, speak it here.
+ 
 };
 
 axsTweet.LoginPage = {};
 axsTweet.LoginPage.state = "username";
 axsTweet.LoginPage.pageLoad = function() {
-    document.addEventListener('keypress', axsTweet.LoginPage.keyHandler, true);
     axsTweet.axsJAXObj.speakTextViaNode("Please enter login details . . Enter username and then press tab to enter password.");
     //alert("Login page lodaded.");
 }
-
-axsTweet.LoginPage.keyHandler = function(evt) {
-    if(evt.tabKey) {
-        if(axsTweet.LoginPage.state === "username") {
-            axsTweet.axsJAXObj.speakTextViaNode("Enter password and then hit enter.");
-            document.getElementById("password").focus();
-        } else {
-            document.getElementById("username_or_email").focus();
-        }
-    }
-}
-
-
 
 /**
  * Handler for key events. 
@@ -219,60 +227,71 @@ axsTweet.LoginPage.keyHandler = function(evt) {
  * @return {boolean} If true, the event should be propagated.
  */
 axsTweet.keyHandler = function(evt){
-  //If Ctrl is held, it must be for some AT. 
+  //If Ctrl is held, it must be for some AT.
  if(window.location != "http://twitter.com/login")
-	{
+    {
+        if(evt.ctrlKey && evt.altKey) {
+            if (evt.charCode == 52) {       //4
+                window.location = "http://twitter.com/following";
+            }
 
- if (evt.charCode == 52 /*&& evt.shiftKey && evt.ctrlKey*/) {//122
-  window.location = "http://twitter.com/following";
-  }
+            if(evt.charCode == 51)          //3
+                window.location = "http://twitter.com/followers";
 
-  if(evt.charCode == 51 /*&& evt.shiftKey && evt.ctrlKey*/)//115
-	  window.location = "http://twitter.com/followers";
+            if(evt.charCode == 49) {        //1
+                try{
+                    document.getElementById("status").focus();
+                    axsTweet.axsJAXObj.speakTextViaNode("You can enter Tweet");
+                } catch(e){}
+            }
 
-  if(evt.charCode == 49 /*&& evt.shiftKey && evt.ctrlKey*/) //61
-		{	  try{
-				document.getElementById("status").focus();
-				axsTweet.axsJAXObj.speakTextViaNode("You can enter Tweet");
-				}
-		  catch(e){}
-		}
+            if(evt.charCode == 50) {        //2
+                try{
+                    document.getElementById("update-submit").click();
+                    axsTweet.axsJAXObj.speakTextViaNode("You Posted a Tweet");
+                } catch(e){}
+            }
+            if(evt.charCode == 48) {        //0
+                try{
+                    document.getElementById('sign_out_form').submit();
+                    axsTweet.axsJAXObj.speakTextViaNode("You are signed out!");
+                } catch(e){}
+            }
 
- if(evt.charCode == 50 /*&& evt.shiftKey && evt.ctrlKey*/)//45
-		{	  try{
-				document.getElementById("update-submit").click();
-				axsTweet.axsJAXObj.speakTextViaNode("You Posted a Tweet");
-				}
-		  catch(e){}
-		}
- if(evt.charCode == 48 /*&& evt.shiftKey && evt.ctrlKey*/)//45
-		{	  try{
-				document.getElementById('sign_out_form').submit();
-				axsTweet.axsJAXObj.speakTextViaNode("You are signed out!");
-				}
-		  catch(e){}
-		}
+            if (evt.keyCode == 27) {
+                try {
+                    axsTweet.axsJAXObj.lastFocusedNode.blur();
+                    alert("Blurred");
+                } catch(e){alert("Not Blurred");}
+                return false;
+            }
+            //alert(evt.charCode+" "+evt.keyCode );
+            if ( evt.charCode == 53) {      //5
+                window.location = "http://twitter.com/";
+            }
 
-if (evt.keyCode == 27)
+            if(evt.keyCode == 9) {
+                if(!axsTweet.loggedin) {
+                    if(axsTweet.LoginPage.state === "username") {
+                        axsTweet.axsJAXObj.speakTextViaNode("Enter password and then hit enter.");
+                        alert("Enter password and then hit enter.");
+                        document.getElementById("password").focus();
+                    } else {
+                        document.getElementById("username_or_email").focus();
+                    }
+                }
+            }
+        }
+    }
 
-{
-	axsTweet.axsJAXObj.lastFocusedNode.blur();
-	return false;
-}
-//alert(evt.charCode+" "+evt.keyCode );
-	if ( evt.charCode == 53 /*&& evt.shiftKey && evt.ctrlKey*/) {//104
-  window.location = "http://twitter.com/";
-  }
-	}
+    if (axsTweet.axsJAXObj.inputFocused) return true;
 
-  if (axsTweet.axsJAXObj.inputFocused) return true;
+    var command = axsTweet.keyCodeMap[evt.keyCode] ||
+    axsTweet.charCodeMap[evt.charCode];
 
-  var command = axsTweet.keyCodeMap[evt.keyCode] ||
-                axsTweet.charCodeMap[evt.charCode];
+    if (command) return command();
 
-  if (command) return command();
-
-  return true;
+    return true;
 };
 
 /**
@@ -310,5 +329,67 @@ axsTweet.charCodeMap = {
          return false;
        }
 };
+var curr = null;
+
+
+function removeHTMLTags(html_data)
+{
+    var strInputCode = html_data;    
+    strInputCode = strInputCode.replace(/&(lt|gt);/g, function (strMatch, p1){return (p1 == "lt")? "<" : ">";});
+    var strTagStrippedText = strInputCode.replace(/<\/?[^>]+(>|$)/g, "");
+    return (strTagStrippedText);
+}
+
+function getElementsByClassName(oElm, strTagName, strClassName)
+{
+    var arrElements = (strTagName == "*" && oElm.all)? oElm.all : oElm.getElementsByTagName(strTagName);
+    var arrReturnElements = new Array();
+    strClassName = strClassName.replace(/\-/g, "\\-");
+    var oRegExp = new RegExp("(^|\\s)" + strClassName + "(\\s|$)");
+    var oElement;
+    for(var i=0; i<arrElements.length; i++){
+        oElement = arrElements[i];
+        if(oRegExp.test(oElement.className)){
+            arrReturnElements.push(oElement);
+        }
+    }
+    return (arrReturnElements);
+}
+
+// This function makes the TTS speak the tweet intelligently
+function speakTweet(currentElement)
+{
+    var compStr = "", tempStr = "";
+    var realnameA = new Array();
+    realnameA = getElementsByClassName(currentElement.elem,"img","photo fn");
+    compStr += realnameA[0].getAttribute("alt");
+
+    usernameA = new Array();
+    usernameA = getElementsByClassName(currentElement.elem,"a","tweet-url screen-name");
+    compStr += " with twitter name " + usernameA[0].innerHTML + " says. ";
+
+    // Replace URLs
+    var hrefArray = currentElement.elem.getElementsByTagName('a');
+    for(var i=0; i<hrefArray.length;i++)
+    {
+        if(hrefArray[i].className == "tweet-url web")    
+        {
+            var replStr = "; Details at this link;";
+            hrefArray[i].innerHTML = replStr;
+        }
+    }
+    // end of Replace URLs
+
+    messageA = new Array();
+    usernameA = getElementsByClassName(currentElement.elem,"span","entry-content");
+    tempStr = removeHTMLTags(usernameA[0].innerHTML);
+    compStr += tempStr;
+    compStr = compStr.replace(/#/gi,"");
+	
+	 axsTweet.axsLensObj.view(currentElement.elem);
+   currentElement.elem.scrollIntoView(true);
+   axsTweet.axsJAXObj.speakTextViaNode(compStr);
+}
+
 
 axsTweet.init();
